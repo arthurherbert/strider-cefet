@@ -26,9 +26,7 @@ export const cefetGeometry = [
 export const StriderCefet = () => {
   return (
     <>
-      <Map>
-        <Polygon color="purple" fillOpacity={0.1} positions={cefetGeometry} />
-      </Map>
+      <Map />
     </>
   );
 };
