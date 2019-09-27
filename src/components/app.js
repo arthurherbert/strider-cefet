@@ -14,49 +14,38 @@ export const StriderCefet = () => {
   const [cefetBuiildings, setCefetBuildings] = useState([]);
   const [studentTracking, setStudentTracking] = useState([]);
 
-  // Refs
-  const mapRef = useRef();
-
   // Efects
   useEffect(() => {
     // Show SpinnerContainer
     setIsLoading(true);
-
-    // Create an array of promises
-    const promises = [
-      axios
-        .get(
-          "https://strider-cefet-backend.arthurherbert.now.sh/get-cefet-geometry"
-        )
-        .then(response => {
-          setCefetGeometry(response.data);
-        }),
-      axios
-        .get(
-          "https://strider-cefet-backend.arthurherbert.now.sh/get-cefet-buildings"
-        )
-        .then(response => {
-          setCefetBuildings(response.data);
-        }),
-      axios
-        .get(
-          "https://strider-cefet-backend.arthurherbert.now.sh/get-student-tracking"
-        )
-        .then(response => {
-          setStudentTracking(response.data);
-        })
-    ];
-
-    // When all of them are finished
-    Promise.all(promises).then(() => {
-      setIsLoading(false);
-    });
+    axios
+      .get(
+        "https://strider-cefet-backend.arthurherbert.now.sh/get-cefet-geometry"
+      )
+      .then(response => {
+        setCefetGeometry(response.data);
+        setIsLoading(false);
+      });
+    axios
+      .get(
+        "https://strider-cefet-backend.arthurherbert.now.sh/get-cefet-buildings"
+      )
+      .then(response => {
+        setCefetBuildings(response.data);
+      });
+    axios
+      .get(
+        "https://strider-cefet-backend.arthurherbert.now.sh/get-student-tracking"
+      )
+      .then(response => {
+        setStudentTracking(response.data);
+      });
   }, []);
 
   return (
     <>
       <SpinnerContainer isLoading={isLoading} />
-      <Map ref={mapRef}>
+      <Map>
         {studentTracking.length > 0 && <Polyline positions={studentTracking} />}
         {cefetGeometry.length > 0 && (
           <Polygon color="purple" fillOpacity={0.1} positions={cefetGeometry} />
