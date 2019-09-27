@@ -7,6 +7,7 @@ import lineIntersect from "@turf/line-intersect";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import axios from "axios";
 
+// Function to slice tracking that fits into geometry
 const sliceTracking = (route, geometry) => {
   const first = route[0];
   const routeOffseted = route.slice(1);
@@ -38,6 +39,7 @@ const sliceTracking = (route, geometry) => {
   return slicedTracking;
 };
 
+// Components
 const CustomTooltip = props => {
   return <div>{props.name}</div>;
 };
@@ -47,15 +49,22 @@ const CustomPopup = props => {
 };
 
 export const StriderCefet = () => {
+  // States
   const [isLoading, setIsLoading] = useState(false);
   const [slicedTracking, setSlicedTracking] = useState([]);
   const [cefetGeometry, setCefetGeometry] = useState([]);
   const [cefetBuiildings, setCefetBuildings] = useState([]);
   const [studentTracking, setStudentTracking] = useState([]);
+
+  // Refs
   const mapRef = useRef();
 
+  // Efects
   useEffect(() => {
+    // Show SpinnerContainer
     setIsLoading(true);
+
+    // Create an array of promises
     const promises = [
       axios
         .get(
@@ -79,11 +88,14 @@ export const StriderCefet = () => {
           setStudentTracking(response.data);
         })
     ];
+
+    // When all of them are finished
     Promise.all(promises).then(() => {
       setIsLoading(false);
     });
   }, []);
 
+  // Slice tracking
   useEffect(() => {
     if (
       cefetGeometry &&
