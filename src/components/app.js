@@ -7,14 +7,6 @@ import lineIntersect from "@turf/line-intersect";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import axios from "axios";
 
-const CustomTooltip = props => {
-  return <div>{props.name}</div>;
-};
-
-const CustomPopup = props => {
-  return <div onClick={props.onClick}>{props.description}</div>;
-};
-
 const sliceTracking = (route, geometry) => {
   const first = route[0];
   const routeOffseted = route.slice(1);
@@ -44,6 +36,14 @@ const sliceTracking = (route, geometry) => {
     return point2;
   }, first);
   return slicedTracking;
+};
+
+const CustomTooltip = props => {
+  return <div>{props.name}</div>;
+};
+
+const CustomPopup = props => {
+  return <div onClick={props.onClick}>{props.description}</div>;
 };
 
 export const StriderCefet = () => {
