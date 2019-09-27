@@ -12,7 +12,6 @@ export const StriderCefet = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [cefetGeometry, setCefetGeometry] = useState([]);
   const [cefetBuiildings, setCefetBuildings] = useState([]);
-  const [studentTracking, setStudentTracking] = useState([]);
 
   // Efects
   useEffect(() => {
@@ -33,20 +32,12 @@ export const StriderCefet = () => {
       .then(response => {
         setCefetBuildings(response.data);
       });
-    axios
-      .get(
-        "https://strider-cefet-backend.arthurherbert.now.sh/get-student-tracking"
-      )
-      .then(response => {
-        setStudentTracking(response.data);
-      });
   }, []);
 
   return (
     <>
       <SpinnerContainer isLoading={isLoading} />
       <Map>
-        {studentTracking.length > 0 && <Polyline positions={studentTracking} />}
         {cefetGeometry.length > 0 && (
           <Polygon color="purple" fillOpacity={0.1} positions={cefetGeometry} />
         )}
