@@ -1,0 +1,32 @@
+{
+  "name": "strider-cefet",
+  "version": "1.0.0",
+  "description": "Sandbox para o mini-curso de apresentação da Strider no CEFET-MG\n",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@turf/turf": "5.1.6",
+    "axios": "0.19.0",
+    "leaflet": "1.4.0",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-leaf": "1.0.4",
+    "react-leaflet": "2.2.1",
+    "react-scripts": "3.1.2"
+  },
+  "devDependencies": {
+    "typescript": "3.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
