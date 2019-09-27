@@ -7,38 +7,6 @@ import lineIntersect from "@turf/line-intersect";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import axios from "axios";
 
-// Function to slice tracking that fits into geometry
-const sliceTracking = (route, geometry) => {
-  const first = route[0];
-  const routeOffseted = route.slice(1);
-  const slicedTracking = [];
-  const turfPolygon = polygon([geometry]);
-  routeOffseted.reduce((point1, point2) => {
-    // Create a line between these two points
-    const line = lineString([point1, point2]);
-    const isPoint1Inside = booleanPointInPolygon(point1, turfPolygon);
-
-    const intersects = lineIntersect(line, turfPolygon);
-    const trackingCuts = intersects.features.length > 0;
-    const trackingCutsOnce = intersects.features.length === 1;
-    const isTrackingInside = !trackingCuts && isPoint1Inside;
-
-    if (isTrackingInside) {
-      slicedTracking.push(point1);
-    } else if (trackingCutsOnce) {
-      const intersectPoint = intersects.features[0].geometry.coordinates.slice();
-      if (isPoint1Inside) {
-        slicedTracking.push(point1);
-        slicedTracking.push(intersectPoint);
-      } else {
-        slicedTracking.push(intersectPoint);
-      }
-    }
-    return point2;
-  }, first);
-  return slicedTracking;
-};
-
 // Components
 const CustomTooltip = props => {
   return <div>{props.name}</div>;
@@ -51,7 +19,6 @@ const CustomPopup = props => {
 export const StriderCefet = () => {
   // States
   const [isLoading, setIsLoading] = useState(false);
-  const [slicedTracking, setSlicedTracking] = useState([]);
   const [cefetGeometry, setCefetGeometry] = useState([]);
   const [cefetBuiildings, setCefetBuildings] = useState([]);
   const [studentTracking, setStudentTracking] = useState([]);
@@ -95,26 +62,11 @@ export const StriderCefet = () => {
     });
   }, []);
 
-  // Slice tracking
-  useEffect(() => {
-    if (
-      cefetGeometry &&
-      cefetGeometry.length > 0 &&
-      studentTracking &&
-      studentTracking.length > 0
-    ) {
-      setSlicedTracking(sliceTracking(studentTracking, cefetGeometry));
-    }
-  }, [studentTracking, cefetGeometry]);
-
   return (
     <>
       <SpinnerContainer isLoading={isLoading} />
       <Map ref={mapRef}>
         {studentTracking.length > 0 && <Polyline positions={studentTracking} />}
-        {slicedTracking.length > 0 && (
-          <Polyline color="lime" positions={slicedTracking} />
-        )}
         {cefetGeometry.length > 0 && (
           <Polygon color="purple" fillOpacity={0.1} positions={cefetGeometry}>
             <Tooltip sticky>
