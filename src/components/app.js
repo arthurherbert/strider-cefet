@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
+
+// Helpers
 import { Map } from "../core/map";
-import { Polygon, Tooltip, Polyline, Popup } from "react-leaflet";
 import { SpinnerContainer } from "../core/spinner-container";
+
+// Requests
+import axios from "axios";
+
+// Map
+import { Polygon, Tooltip, Polyline, Popup } from "react-leaflet";
+
+// Challenge
 import { lineString, polygon } from "@turf/helpers";
 import lineIntersect from "@turf/line-intersect";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
-import axios from "axios";
 
+// Mocked Geometry
 export const cefetGeometry = [
   [-19.939751982185285, -44.00073766708373],
   [-19.940301649756154, -43.998597264289856],
