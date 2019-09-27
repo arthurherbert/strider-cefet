@@ -11,7 +11,6 @@ export const StriderCefet = () => {
   // States
   const [isLoading, setIsLoading] = useState(false);
   const [cefetGeometry, setCefetGeometry] = useState([]);
-  const [cefetBuiildings, setCefetBuildings] = useState([]);
 
   // Efects
   useEffect(() => {
@@ -25,13 +24,6 @@ export const StriderCefet = () => {
         setCefetGeometry(response.data);
         setIsLoading(false);
       });
-    axios
-      .get(
-        "https://strider-cefet-backend.arthurherbert.now.sh/get-cefet-buildings"
-      )
-      .then(response => {
-        setCefetBuildings(response.data);
-      });
   }, []);
 
   return (
@@ -41,16 +33,6 @@ export const StriderCefet = () => {
         {cefetGeometry.length > 0 && (
           <Polygon color="purple" fillOpacity={0.1} positions={cefetGeometry} />
         )}
-        {cefetBuiildings.map((building, index) => {
-          return (
-            <Polygon
-              key={index}
-              color={building.color}
-              fillOpacity={0.4}
-              positions={building.coordinates}
-            />
-          );
-        })}
       </Map>
     </>
   );
