@@ -1,10 +1,13 @@
 import React, { useRef, useImperativeHandle, forwardRef } from "react";
 import { Map as ReactLeafletMap, TileLayer } from "react-leaflet";
 
+// CEFET-MG Campus 2
 const bounds = [
   [-19.93706818861579, -43.99688463192433],
   [-19.940991528702593, -44.00114397983999]
 ];
+
+// Tiles
 const DGTileUrl =
   "https://earthwatch.digitalglobe.com/earthservice/tmsaccess/tms/1.0.0/DigitalGlobe:ImageryTileService@EPSG:3857@jpg/{z}/{x}/{y}.jpg?connectId=f23edc43-408f-44bd-ae0c-03e0a294777f";
 
@@ -13,6 +16,7 @@ const mapStyle = {
   width: "100%"
 };
 
+// Export Map with closePopup function
 export const Map = forwardRef((props, ref) => {
   const mapRef = useRef(null);
 
